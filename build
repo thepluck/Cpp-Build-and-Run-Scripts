@@ -1,26 +1,16 @@
-#!/usr/bin/bash
+#!python
 
-if [ $# -eq 0 ]; then
-    exit 1
-fi
+import os
+from pathlib import Path
+from argparse import ArgumentParser
 
-if [ "$1" == "-h" ]; then
-    echo Usage:
-    echo "  build TAKSNAME"
-    exit 0
-fi
+parser = ArgumentParser(prog="build", description="C++ build script")
 
-hasTaskName=false
+parser.add_argument("file", help="C++ file name")
 
-for arg in $*; do
-    if [ -e "$arg.cpp" ]; then
-        eval "g++ -std=gnu++17 -O2 -Wall -Wextra -Wfloat-equal -Wshadow -pipe -static $1.cpp -o $1"
-        hasTaskName=true
-        break
-    fi
-done
+args = parser.parse_args()
 
-if !($hasTaskName); then
-    echo build: Missing TAKSNAME
-    exit 1
-fi
+path = Path(args.file)
+path = path.parent / path.stem
+
+os.system(f"g++ -std=c++17 -Wall -o {path} {path}.cpp")
