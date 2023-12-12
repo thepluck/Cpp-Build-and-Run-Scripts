@@ -13,4 +13,4 @@ args = parser.parse_args()
 path = Path(args.file)
 path = path.parent / path.stem
 
-os.system(f"g++ -std=c++17 -Wall -o {path} {path}.cpp")
+os.system(f"g++ -std=c++17 -Wall -O2 -o {path} {path}.cpp")
